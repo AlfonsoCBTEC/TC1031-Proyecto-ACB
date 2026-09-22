@@ -16,3 +16,7 @@ Para este primer avance, la información almacenada en memoria se organiza media
   * Complejidad temporal: $O(n \log n)$ en todos los casos, porque siempre divide la lista a la mitad (log n niveles) y luego une todos los elementos en orden (n comparaciones por nivel).
 * **Algoritmo Insertion Sort (Ordenamiento por Promedio):**
   * Complejidad temporal: $O(n^2)$ en el promedio y peor de los casos, pero $O(n)$ en el mejor de los casos (cuando los promedios ya ingresan ordenados).
+ 
+ ## SICT0303B: Implementa acciones científicas
+**Implementa mecanismos de lectura de archivos correctos y útiles.**
+El sistema cuenta con un módulo que lee el archivo `expedientes.csv`. Toma la matrícula, nombre, carrera y promedio de cada línea, instanciando objetos de la clase `Expediente`.
