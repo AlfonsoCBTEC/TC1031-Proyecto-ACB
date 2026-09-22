@@ -8,3 +8,11 @@ Este proyecto es un sistema para administrar información académica. El sistema
 Para este primer avance, la información almacenada en memoria se organiza mediante dos algoritmos de ordenamiento:
 1. **Merge Sort:** Implementado para ordenar los expedientes alfabéticamente por `nombre`. Elegí este algoritmo porque tiene un redimiento eficiente para cadenas de texto.
 2. **Insertion Sort:** Utilizado para ordenar los expedientes por `promedio` (de mayor a menor). Se seleccionó porque en escenarios reales donde la lista de alumnos de excelencia académica ya está parcialmente ordenada (o se agregan pocos registros a la vez), este algoritmo procesa los datos casi en tiempo lineal.
+
+## SICT0301B: Evalúa los componentes
+**Hace un análisis de complejidad correcto y completo para todo el programa y sus componentes.**
+
+* **Algoritmo Merge Sort (Ordenamiento por Nombre):** 
+  * Complejidad temporal: $O(n \log n)$ en todos los casos, porque siempre divide la lista a la mitad (log n niveles) y luego une todos los elementos en orden (n comparaciones por nivel).
+* **Algoritmo Insertion Sort (Ordenamiento por Promedio):**
+  * Complejidad temporal: $O(n^2)$ en el promedio y peor de los casos, pero $O(n)$ en el mejor de los casos (cuando los promedios ya ingresan ordenados).
