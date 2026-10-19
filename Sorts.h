@@ -16,7 +16,7 @@ private:
      * @brief Aqui se divide la dlist en 2 mitades usando punteros slow y fast en O(n), para luego implementar merge sort.
      */
 
-     static DLink<Expediente>* split(DLink<Expediente>* head){
+    static DLink<Expediente>* split(DLink<Expediente>* head){
         DLink<Expediente>* fast = head;
         DLink<Expediente>* slow = head;
         while(fast->next != nullptr && fast->next->next != nullptr){
@@ -29,7 +29,31 @@ private:
             temp->previous = nullptr;
         }
         return temp;
-     }
+    }
+
+    /**
+      * @brief Fusiona 2 sublistas doblemente ligadas en orden alfabetico por Nombre.
+      */
+
+    static DLink<Expediente>* mergePorNombre(DLink<Expediente>* first, DLink<Expediente>* second) {
+        
+        if (first == nullptr) return second;
+        if (second == nullptr) return first;
+
+        if (first->value.getNombre() <= second->value.getNombre()) {
+            first->next = mergePorNombre(first->next, second);
+            if (first->next != nullptr) first->next->previous = first;
+            first->previous = nullptr;
+            return first;
+        } else{
+            second->next = mergePorNombre(first, second->next);
+            if (second->next != nullptr) second->next->previous = second;
+            second->previous = nullptr;
+            return second;
+        }
+
+    }
+
 public: 
 
     /**
