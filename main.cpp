@@ -83,3 +83,78 @@ void guardarExpedientes(const DList<Expediente>& lista, const string& nombreArch
     archivo.close();
     cout << "\nLos cambios se guardaron en: " << nombreArchivo << "\n";
 }
+
+/**
+ * @brief Recorre e imprime en consola todos los elementos de la DList.
+ * @param lista Referencia a la DList.
+ */
+void mostrarExpedientes(const DList<Expediente>& lista) {
+    if (lista.empty()) {
+        cout << "\nEsta vacia la lista.\n";
+        return;
+    }
+    cout << "\n-----Expedientes actuales (" << lista.length() << " registros) ---\n";
+    DLink<Expediente>* curr = lista.getHead();
+    while (curr != nullptr) {
+        curr->value.imprimir();
+        curr = curr->next;
+    }
+}
+
+/**
+ * @brief Captura un nuevo expediente desde consola y lo inserta en la DList y en el BST.
+ * @param lista Referencia a la DList.
+ * @param arbol Referencia al BST.
+ */
+void registrarNuevoExpediente(DList<Expediente>& lista, BST& arbol) {
+
+    string matricula, nombre, carrera;
+    float promedio;
+    int creditos;
+
+    cout << "\n----- Registrar Nuevo Expediente ---\n";
+    cout << "Matricula: ";
+    cin >> matricula;
+
+    if (lista.findByMatricula(matricula) != nullptr) {
+        cout << "\nYa existe estudiante con la siguiente matricula " << matricula << ".\n";
+        return;
+    }
+
+    cin.ignore();
+    cout << "Nombre completo (Apellidos y Nombre): ";
+    getline(cin, nombre);
+
+    cout << "Carrera: ";
+    getline(cin, carrera);
+
+    cout << "Promedio (0 a 100): ";
+    cin >> promedio;
+
+    cout << "Creditos aprobados: ";
+    cin >> creditos;
+
+    Expediente nuevo(matricula, nombre, carrera, promedio, creditos);
+    lista.addLast(nuevo);
+    arbol.add(nuevo);
+
+    cout << "\nEl expediente se agrego a la DList y al BST.\n";
+}
+
+/**
+ * @brief Busca un expediente por su matricula directamente en la DList.
+ * @param lista Referencia a la DList.
+ */
+void buscarPorMatricula(const DList<Expediente>& lista) {
+    string matricula;
+    cout << "\nIngresa la matricula a buscar: ";
+    cin >> matricula;
+
+    DLink<Expediente>* nodo = lista.findByMatricula(matricula);
+    if (nodo != nullptr) {
+        cout << "\n-----Expediente Encontrado------\n";
+        nodo->value.imprimir();
+    } else {
+        cout << "\nNo se encontro ningun expediente con la matricula " << matricula << ".\n";
+    }
+}
