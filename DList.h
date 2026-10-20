@@ -62,6 +62,38 @@ public:
     }
 
     /**
+     * @brief Busca algun expediente por matricula en O(n).
+     * @return Si es que existe, un puntero al nodo, sino nullptr
+     */
+    DLink<T>* findByMatricula(const std::string& mat) const{
+        DLink<T>* curr = head;
+        while (curr != nullptr){
+            if (curr->value.getMatricula() == mat){
+                return curr;
+            }
+            curr = curr -> next;
+        }
+        return nullptr;
+    }
+
+    /**
+     * @brief Elimina algun nodo especifico por matricula en O(n)
+     */
+    bool removeByMatricula(const std::string& mat){
+        DLink<T>* target = findByMatricula(mat);
+        if(target == nullptr) return false;
+
+        if(target == head) head = target->next;
+        if(target == tail) tail = target->previous;
+        if(target->previous != nullptr) target->previous->next = target->next;
+        if(target->next != nullptr) target->next->previous = target->previous;
+
+        delete target;
+        size--;
+        return true;
+    }
+
+    /**
      * @brief Libera toda la memoria de la dlist en O(n).
      */
     void clear(){
