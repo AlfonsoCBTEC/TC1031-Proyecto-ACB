@@ -17,14 +17,16 @@ private:
     int creditos;
 
 public:
-    // Constructores
     Expediente() : matricula(""), nombre(""), carrera(""), promedio(0.0), creditos(0) {}
+
     Expediente(std::string _mat, std::string _nom, std::string _car, float _prom, int _cred) 
         : matricula(_mat), nombre(_nom), carrera(_car), promedio(_prom), creditos(_cred) {}
 
-    // Getters
+    std::string getMatricula() const {return matricula;}
     std::string getNombre() const { return nombre; }
+    std::string getCarrera() const {return carrera; }
     float getPromedio() const { return promedio; }
+    int getCreditos() const { return creditos; }
 
     /**
      * @brief Muestra los datos del estudiante en consola.
