@@ -24,6 +24,20 @@ public:
 class BST {
 private:
     TreeNode* root;
+
+    void addRec(TreeNode*& node, const Expediente& val) {
+        if (node == nullptr) {
+            node = new TreeNode(val);
+            return;
+        }
+        // En caso de que tengan el mismo promedio, desempata por matricula para no perder registros
+        if (val.getPromedio() < node->value.getPromedio() ||
+           (val.getPromedio() == node->value.getPromedio() && val.getMatricula() < node->value.getMatricula())) {
+            addRec(node->left, val);
+        } else {
+            addRec(node->right, val);
+        }
+    }
     
     void clearRec(TreeNode* node){
         if(node!=nullptr) {
@@ -36,6 +50,13 @@ private:
 public:
     BST() : root(nullptr) {}
     ~BST() {clear();}
+
+    /**
+     * @brief Inserta un expediente en el arbol en O(log n)
+     */
+    void add(const Expediente& val) {
+        addRec(root, val);
+    }
 
     void clear(){
         clearRec(root);
