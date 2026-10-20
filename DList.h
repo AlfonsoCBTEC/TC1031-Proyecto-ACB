@@ -42,7 +42,7 @@ public:
     }
 
     bool empty() const { return (head == nullptr); }
-    int lenght() const { return size;}
+    int length() const { return size;}
     DLink<T>* getHead() const { return head; }
     DLink<T>* getTail() const { return tail; }
 
