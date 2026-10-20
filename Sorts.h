@@ -67,7 +67,25 @@ private:
         return mergePorNombre(node, second);
     }
 
-public: 
+public:
+
+    /**
+     * @brief Ordena la DList alfabeticamente por nombre en O(n log n)
+     */
+
+     static void mergeSortPorNombre(DList<Expediente>& lista) {
+        if(lista.head == nullptr || lista.head->next == nullptr) return;
+
+        lista.head = mergeSortRec(lista.head);
+
+        //Aqui finalmente actualice el tail despues de todo el cambio de enlaces
+        DLink<Expediente>* curr = lista.head;
+        while(curr->next != nullptr){
+            curr = curr->next;
+        }
+        lista.tail = curr;
+     }
+
 
     /**
      * @brief Ordena la DList por promedio descendente usando Insertion Sort en O(n^2) / O(n) mejor caso.
