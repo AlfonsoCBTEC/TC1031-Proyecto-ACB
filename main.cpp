@@ -212,3 +212,75 @@ void filtrarPorRangoPromedio(const BST& arbol) {
 
     arbol.consultarRangoPromedio(minProm, maxProm);
 }
+
+int main() {
+    string archivoDatos = "expedientes.csv";
+    DList<Expediente> registros;
+    BST arbolPromedios;
+
+    cargarExpedientes(archivoDatos, registros, arbolPromedios);
+
+    int opcion = 0;
+    do {
+        cout << "\n=======================================================" << endl;
+        cout << "      SISTEMA DE GESTION DE EXPEDIENTES ACADEMICOS de Alfonso   " << endl;
+        cout << "====================================================" << endl;
+        cout << "1. Mostrar padron actual de expedientes (DList)" << endl;
+        cout << "2. Registrar nuevo expediente (Alta en DList y BST)" << endl;
+        cout << "3. Buscar expediente por Matricula (Busqueda en DList)" << endl;
+        cout << "4. Eliminar expediente por Matricula (Baja en DList)" << endl;
+        cout << "5. Ordenar padron alfabeticamente por Nombre (Merge Sort)" << endl;
+        cout << "6. Ordenar padron por Promedio descendente (Insertion Sort)" << endl;
+        cout << "7. Consultar expedientes por rango de Promedio (BST)" << endl;
+        cout << "8. Guardar estado actual en el archivo CSV" << endl;
+        cout << "9. Salir" << endl;
+        cout << "Selecciona una opcion: ";
+
+        if (!(cin >> opcion)) {
+            cin.clear();
+            cin.ignore(10000, '\n');
+            cout << "\nEntrada invalida. Por favor ingresa un numero.\n";
+            continue;
+        }
+
+        switch (opcion) {
+            case 1:
+                mostrarExpedientes(registros);
+                break;
+
+            case 2:
+                registrarNuevoExpediente(registros, arbolPromedios);
+                break;
+            case 3:
+                buscarPorMatricula(registros);
+                break;
+            case 4:
+                eliminarExpediente(registros, arbolPromedios);
+                break;
+            case 5:
+                Sorts::mergeSortPorNombre(registros);
+                cout << "\nRegistros ordenado alfabeticamente por Nombre (Merge Sort sobre nodos).\n";
+                mostrarExpedientes(registros);
+                break;
+            case 6:
+                Sorts::insertionSortPorPromedio(registros);
+                cout << "\nRegsitros ordenados por Promedio descendente (Insertion Sort).\n";
+                mostrarExpedientes(registros);
+                break;
+            case 7:
+                filtrarPorRangoPromedio(arbolPromedios);
+                break;
+            case 8:
+                guardarExpedientes(registros, archivoDatos);
+                break;
+            case 9:
+                cout << "\nGracias por usar el sistema!\n";
+                break;
+            default:
+                cout << "\nOpcion fuera de rango.\n";
+        }
+    } while (opcion != 9);
+
+    
+    return 0;
+}
