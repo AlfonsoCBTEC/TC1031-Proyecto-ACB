@@ -16,6 +16,21 @@
 using namespace std;
 
 /**
+ * @brief Reconstruye el BST a partir de los elementos actuales en la DList.
+ *        Se utiliza cuando se elimina un registro para asegurarnos que ambas estructuras estan sincronizadas.
+ * @param lista Referencia constante a la DList.
+ * @param arbol Referencia al BST a reconstruir.
+ */
+void sincronizarArbol(const DList<Expediente>& lista, BST& arbol) {
+    arbol.clear();
+    DLink<Expediente>* curr = lista.getHead();
+    while (curr != nullptr) {
+        arbol.add(curr->value);
+        curr = curr->next;
+    }
+}
+
+/**
  * @brief Lee el archivo CSV y añade registros tanto a la DList como en el BST inicial.
  * @param nombreArchivo Ruta del archivo CSV.
  * @param lista Referencia a la DList principal.
@@ -157,4 +172,43 @@ void buscarPorMatricula(const DList<Expediente>& lista) {
     } else {
         cout << "\nNo se encontro ningun expediente con la matricula " << matricula << ".\n";
     }
+}
+
+
+/**
+ * @brief Elimina un expediente por su matricula de la DList y actualiza el BST.
+ * @param lista Referencia a la DList.
+ * @param arbol Referencia al BST.
+ */
+void eliminarExpediente(DList<Expediente>& lista, BST& arbol) {
+    string matricula;
+    cout << "\nIngresa la matricula del expediente a eliminar: ";
+    cin >> matricula;
+
+    if (lista.removeByMatricula(matricula)) {
+        sincronizarArbol(lista, arbol);
+        cout << "\nel Expediente  " << matricula << " fue eliminado correctamente.\n";
+    } else {
+        cout << "\nNo se ecnontro la matricula " << matricula << " para eliminar.\n";
+    }
+}
+
+/**
+ * @brief Consulta el BST para mostrar expedientes dentro de un rango de promedios.
+ * @param arbol Referencia al BST.
+ */
+void filtrarPorRangoPromedio(const BST& arbol) {
+    float minProm, maxProm;
+    cout << "\n----Consulta por Rango de Promedio (BST In-Order) ---\n";
+    cout << "Ingresa el promedio minimo (ej. 90.0): ";
+    cin >> minProm;
+    cout << "Ingresa el promedio maximo (ej. 100.0): ";
+    cin >> maxProm;
+
+    if (minProm > maxProm) {
+        cout << "\nel minimo no puede ser mayor al maximo.\n";
+        return;
+    }
+
+    arbol.consultarRangoPromedio(minProm, maxProm);
 }
