@@ -36,7 +36,6 @@ private:
       */
 
     static DLink<Expediente>* mergePorNombre(DLink<Expediente>* first, DLink<Expediente>* second) {
-        
         if (first == nullptr) return second;
         if (second == nullptr) return first;
 
@@ -51,7 +50,21 @@ private:
             second->previous = nullptr;
             return second;
         }
+    }
 
+    /**
+     * @brief Funcion recursiva de Merge Sort sobre los enlaces de los nodos.
+     */
+
+    static DLink<Expediente>* mergeSortRec(DLink<Expediente>* node){
+        if(node == nullptr || node->next == nullptr){
+            return node;
+        }
+        DLink<Expediente>* second = split(node);
+        node = mergeSortRec(node);
+        second = mergeSortRec(second);
+
+        return mergePorNombre(node, second);
     }
 
 public: 
