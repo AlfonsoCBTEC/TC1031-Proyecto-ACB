@@ -32,10 +32,30 @@ private:
         }
         // En caso de que tengan el mismo promedio, desempata por matricula para no perder registros
         if (val.getPromedio() < node->value.getPromedio() ||
-           (val.getPromedio() == node->value.getPromedio() && val.getMatricula() < node->value.getMatricula())) {
+            (val.getPromedio() == node->value.getPromedio() && val.getMatricula() < node->value.getMatricula())) {
             addRec(node->left, val);
         } else {
             addRec(node->right, val);
+        }
+    }
+
+    void inOrderRangeRec(TreeNode* node, float minProm, float maxProm, int& contador) const {
+        if (node == nullptr) return;
+
+        // Solo explora el subarbol izquierdo si puede haber promedios mayores o iguales a minProm
+        if (node->value.getPromedio() >= minProm) {
+            inOrderRangeRec(node->left, minProm, maxProm, contador);
+        }
+
+        // Si esta dentro del rango, lo va a imprimir en orden ascendente
+        if (node->value.getPromedio() >= minProm && node->value.getPromedio() <= maxProm) {
+            node->value.imprimir();
+            contador++;
+        }
+
+        // Solo explora el subarbol derecho si puede haber promedios menores o iguales a maxProm
+        if (node->value.getPromedio() <= maxProm) {
+            inOrderRangeRec(node->right, minProm, maxProm, contador);
         }
     }
     
@@ -56,6 +76,18 @@ public:
      */
     void add(const Expediente& val) {
         addRec(root, val);
+    }
+
+    /**
+     * @brief Muestra los expedientes cuyo promedio se encuentre entre minProm y maxProm
+     */
+    void consultarRangoPromedio(float minProm, float maxProm) const {
+        int encontrados = 0;
+        std::cout << "\n--- Expedientes con un promedio entre " << minProm << " y " << maxProm << " ----\n";
+        inOrderRangeRec(root, minProm, maxProm, encontrados);
+        if (encontrados == 0) {
+            std::cout << "No se encontraron expedientes en ese rango.\n";
+        }
     }
 
     void clear(){
