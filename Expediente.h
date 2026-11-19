@@ -10,33 +10,44 @@
  */
 class Expediente {
 private:
-    std::string matricula;
-    std::string nombre;
-    std::string carrera;
-    float promedio;
-    int creditos;
+    std::string id;
+    std::string name;
+    std::string major;
+    float average;
+    int credits;
 
 public:
-    Expediente() : matricula(""), nombre(""), carrera(""), promedio(0.0), creditos(0) {}
+    Expediente();
+    Expediente(std::string _id, std::string _name, std::string _major, float _avg, int _cred);
 
-    Expediente(std::string _mat, std::string _nom, std::string _car, float _prom, int _cred) 
-        : matricula(_mat), nombre(_nom), carrera(_car), promedio(_prom), creditos(_cred) {}
-
-    std::string getMatricula() const {return matricula;}
-    std::string getNombre() const { return nombre; }
-    std::string getCarrera() const {return carrera; }
-    float getPromedio() const { return promedio; }
-    int getCreditos() const { return creditos; }
+    std::string getId() const;
+    std::string getName() const;
+    std::string getMajor() const;
+    float getAverage() const;
+    int getCredits() const;
 
     /**
      * @brief Muestra los datos del estudiante en consola.
      */
-    void imprimir() const {
-        std::cout << "[" << matricula << "] " << nombre 
-                  << " | " << carrera 
-                  << " | Promedio: " << promedio 
-                  << " | Creditos: " << creditos << "\n";
-    }
+    void print() const;
 };
+
+Expediente::Expediente() : id(""), name(""), major(""), average(0.0), credits(0) {}
+
+Expediente::Expediente(std::string _id, std::string _name, std::string _major, float _avg, int _cred) 
+    : id(_id), name(_name), major(_major), average(_avg), credits(_cred) {}
+
+std::string Expediente::getId() const { return id; }
+std::string Expediente::getName() const { return name; }
+std::string Expediente::getMajor() const { return major; }
+float Expediente::getAverage() const { return average; }
+int Expediente::getCredits() const { return credits; }
+
+void Expediente::print() const {
+    std::cout << "[" << id << "] " << name 
+              << " | " << major 
+              << " | Promedio: " << average 
+              << " | Creditos: " << credits << "\n";
+}
 
 #endif
