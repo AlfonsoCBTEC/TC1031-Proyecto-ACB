@@ -1,7 +1,7 @@
 /**
- * @file main.cpp
- * @brief Menu interactivo para el Sistema de Gestion de Expedientes.
- *        Integra DList, Sorts sobre nodos y BST para busquedas por rango.
+- @file main.cpp
+- @brief Menu interactivo para el Sistema de Gestion de Expedientes.
+-        Integra DList, Sorts sobre nodos y BST para busquedas por rango.
  */
 
 #include <iostream>
@@ -16,10 +16,10 @@
 using namespace std;
 
 /**
- * @brief Reconstruye el BST a partir de los elementos actuales en la DList.
- *        Se utiliza cuando se elimina un registro para asegurarnos que ambas estructuras estan sincronizadas.
- * @param lista Referencia constante a la DList.
- * @param arbol Referencia al BST a reconstruir.
+- @brief Reconstruye el BST a partir de los elementos actuales en la DList.
+-        Se utiliza cuando se elimina un registro para asegurarnos que ambas estructuras estan sincronizadas.
+- @param lista Referencia constante a la DList.
+- @param arbol Referencia al BST a reconstruir.
  */
 void sincronizarArbol(const DList<Expediente>& lista, BST& arbol) {
     arbol.clear();
@@ -31,10 +31,10 @@ void sincronizarArbol(const DList<Expediente>& lista, BST& arbol) {
 }
 
 /**
- * @brief Lee el archivo CSV y añade registros tanto a la DList como en el BST inicial.
- * @param nombreArchivo Ruta del archivo CSV.
- * @param lista Referencia a la DList principal.
- * @param arbol Referencia al BST.
+- @brief Lee el archivo CSV y añade registros tanto a la DList como en el BST inicial.
+- @param nombreArchivo Ruta del archivo CSV.
+- @param lista Referencia a la DList principal.
+- @param arbol Referencia al BST.
  */
 void cargarExpedientes(const string& nombreArchivo, DList<Expediente>& lista, BST& arbol) {
 
@@ -72,9 +72,9 @@ void cargarExpedientes(const string& nombreArchivo, DList<Expediente>& lista, BS
 
 
 /**
- * @brief Sobreescribe el archivo CSV con elorden actual de la DList.
- * @param lista Referencia a la DList.
- * @param nombreArchivo Ruta del archivo CSV.
+- @brief Sobreescribe el archivo CSV con elorden actual de la DList.
+- @param lista Referencia a la DList.
+- @param nombreArchivo Ruta del archivo CSV.
  */
 void guardarExpedientes(const DList<Expediente>& lista, const string& nombreArchivo) {
     ofstream archivo(nombreArchivo);
@@ -87,11 +87,11 @@ void guardarExpedientes(const DList<Expediente>& lista, const string& nombreArch
 
     DLink<Expediente>* curr = lista.getHead();
     while (curr != nullptr) {
-        archivo << curr->value.getMatricula() << ","
-                << curr->value.getNombre() << ","
-                << curr->value.getCarrera() << ","
-                << curr->value.getPromedio() << ","
-                << curr->value.getCreditos() << "\n";
+        archivo << curr->value.getId() << ","
+                << curr->value.getName() << ","
+                << curr->value.getMajor() << ","
+                << curr->value.getAverage() << ","
+                << curr->value.getCredits() << "\n";
         curr = curr->next;
     }
 
@@ -100,8 +100,8 @@ void guardarExpedientes(const DList<Expediente>& lista, const string& nombreArch
 }
 
 /**
- * @brief Recorre e imprime en consola todos los elementos de la DList.
- * @param lista Referencia a la DList.
+- @brief Recorre e imprime en consola todos los elementos de la DList.
+- @param lista Referencia a la DList.
  */
 void mostrarExpedientes(const DList<Expediente>& lista) {
     if (lista.empty()) {
@@ -111,15 +111,15 @@ void mostrarExpedientes(const DList<Expediente>& lista) {
     cout << "\n-----Expedientes actuales (" << lista.length() << " registros) ---\n";
     DLink<Expediente>* curr = lista.getHead();
     while (curr != nullptr) {
-        curr->value.imprimir();
+        curr->value.print();
         curr = curr->next;
     }
 }
 
 /**
- * @brief Captura un nuevo expediente desde consola y lo inserta en la DList y en el BST.
- * @param lista Referencia a la DList.
- * @param arbol Referencia al BST.
+- @brief Captura un nuevo expediente desde consola y lo inserta en la DList y en el BST.
+- @param lista Referencia a la DList.
+- @param arbol Referencia al BST.
  */
 void registrarNuevoExpediente(DList<Expediente>& lista, BST& arbol) {
 
@@ -131,7 +131,7 @@ void registrarNuevoExpediente(DList<Expediente>& lista, BST& arbol) {
     cout << "Matricula: ";
     cin >> matricula;
 
-    if (lista.findByMatricula(matricula) != nullptr) {
+    if (lista.findByStudentId(matricula) != nullptr) {
         cout << "\nYa existe estudiante con la siguiente matricula " << matricula << ".\n";
         return;
     }
@@ -157,18 +157,18 @@ void registrarNuevoExpediente(DList<Expediente>& lista, BST& arbol) {
 }
 
 /**
- * @brief Busca un expediente por su matricula directamente en la DList.
- * @param lista Referencia a la DList.
+- @brief Busca un expediente por su matricula directamente en la DList.
+- @param lista Referencia a la DList.
  */
 void buscarPorMatricula(const DList<Expediente>& lista) {
     string matricula;
     cout << "\nIngresa la matricula a buscar: ";
     cin >> matricula;
 
-    DLink<Expediente>* nodo = lista.findByMatricula(matricula);
+    DLink<Expediente>* nodo = lista.findByStudentId(matricula);
     if (nodo != nullptr) {
         cout << "\n-----Expediente Encontrado------\n";
-        nodo->value.imprimir();
+        nodo->value.print();
     } else {
         cout << "\nNo se encontro ningun expediente con la matricula " << matricula << ".\n";
     }
@@ -176,16 +176,16 @@ void buscarPorMatricula(const DList<Expediente>& lista) {
 
 
 /**
- * @brief Elimina un expediente por su matricula de la DList y actualiza el BST.
- * @param lista Referencia a la DList.
- * @param arbol Referencia al BST.
+- @brief Elimina un expediente por su matricula de la DList y actualiza el BST.
+- @param lista Referencia a la DList.
+- @param arbol Referencia al BST.
  */
 void eliminarExpediente(DList<Expediente>& lista, BST& arbol) {
     string matricula;
     cout << "\nIngresa la matricula del expediente a eliminar: ";
     cin >> matricula;
 
-    if (lista.removeByMatricula(matricula)) {
+    if (lista.removeByStudentId(matricula)) {
         sincronizarArbol(lista, arbol);
         cout << "\nel Expediente  " << matricula << " fue eliminado correctamente.\n";
     } else {
@@ -194,8 +194,8 @@ void eliminarExpediente(DList<Expediente>& lista, BST& arbol) {
 }
 
 /**
- * @brief Consulta el BST para mostrar expedientes dentro de un rango de promedios.
- * @param arbol Referencia al BST.
+- @brief Consulta el BST para mostrar expedientes dentro de un rango de promedios.
+- @param arbol Referencia al BST.
  */
 void filtrarPorRangoPromedio(const BST& arbol) {
     float minProm, maxProm;
@@ -210,7 +210,7 @@ void filtrarPorRangoPromedio(const BST& arbol) {
         return;
     }
 
-    arbol.consultarRangoPromedio(minProm, maxProm);
+    arbol.queryAverageRange(minProm, maxProm);
 }
 
 int main() {
@@ -258,12 +258,12 @@ int main() {
                 eliminarExpediente(registros, arbolPromedios);
                 break;
             case 5:
-                Sorts::mergeSortPorNombre(registros);
+                Sorts::mergeSortByName(registros);
                 cout << "\nRegistros ordenado alfabeticamente por Nombre (Merge Sort sobre nodos).\n";
                 mostrarExpedientes(registros);
                 break;
             case 6:
-                Sorts::insertionSortPorPromedio(registros);
+                Sorts::insertionSortByAverage(registros);
                 cout << "\nRegsitros ordenados por Promedio descendente (Insertion Sort).\n";
                 mostrarExpedientes(registros);
                 break;
