@@ -12,6 +12,7 @@
 #include "DList.h"
 #include "Sorts.h"
 #include "BST.h"
+#include "InputUtils.h"
 
 using namespace std;
 
@@ -117,39 +118,28 @@ void mostrarExpedientes(const DList<Expediente>& lista) {
 }
 
 /**
-- @brief Captura un nuevo expediente desde consola y lo inserta en la DList y en el BST.
+- @brief Captura un nuevo expediente desde consola validando entradas y lo inserta en la DList y en el BST.
 - @param lista Referencia a la DList.
 - @param arbol Referencia al BST.
  */
 void registrarNuevoExpediente(DList<Expediente>& lista, BST& arbol) {
-
-    string matricula, nombre, carrera;
-    float promedio;
-    int creditos;
-
     cout << "\n----- Registrar Nuevo Expediente ---\n";
-    cout << "Matricula: ";
-    cin >> matricula;
+    string matricula = InputUtils::readText("Matricula: ");
 
     if (lista.findByStudentId(matricula) != nullptr) {
-        cout << "\nYa existe estudiante con la siguiente matricula " << matricula << ".\n";
+        cout << "\nYa existe un estudiante con la matricula " << matricula << ".\n";
         return;
     }
 
-    cin.ignore();
-    cout << "Nombre completo (Apellidos y Nombre): ";
-    getline(cin, nombre);
+    string nombres = InputUtils::readText("Nombre(s): ");
+    string apellidos = InputUtils::readText("Apellidos: ");
+    string nombreCompleto = apellidos + " " + nombres;
 
-    cout << "Carrera: ";
-    getline(cin, carrera);
+    string carrera = InputUtils::readText("Carrera: ");
+    float promedio = InputUtils::readFloat("Promedio (0 a 100): ", 0.0f, 100.0f);
+    int creditos = InputUtils::readInt("Creditos aprobados (0 a 160): ", 0, 160);
 
-    cout << "Promedio (0 a 100): ";
-    cin >> promedio;
-
-    cout << "Creditos aprobados: ";
-    cin >> creditos;
-
-    Expediente nuevo(matricula, nombre, carrera, promedio, creditos);
+    Expediente nuevo(matricula, nombreCompleto, carrera, promedio, creditos);
     lista.addLast(nuevo);
     arbol.add(nuevo);
 
