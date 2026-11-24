@@ -151,9 +151,7 @@ void registrarNuevoExpediente(DList<Expediente>& lista, BST& arbol) {
 - @param lista Referencia a la DList.
  */
 void buscarPorMatricula(const DList<Expediente>& lista) {
-    string matricula;
-    cout << "\nIngresa la matricula a buscar: ";
-    cin >> matricula;
+    string matricula = InputUtils::readText("\nIngresa la matricula a buscar: ");
 
     DLink<Expediente>* nodo = lista.findByStudentId(matricula);
     if (nodo != nullptr) {
@@ -171,9 +169,7 @@ void buscarPorMatricula(const DList<Expediente>& lista) {
 - @param arbol Referencia al BST.
  */
 void eliminarExpediente(DList<Expediente>& lista, BST& arbol) {
-    string matricula;
-    cout << "\nIngresa la matricula del expediente a eliminar: ";
-    cin >> matricula;
+    string matricula = InputUtils::readText("\nIngresa la matricula del expediente a eliminar: ");
 
     if (lista.removeByStudentId(matricula)) {
         sincronizarArbol(lista, arbol);
@@ -188,12 +184,9 @@ void eliminarExpediente(DList<Expediente>& lista, BST& arbol) {
 - @param arbol Referencia al BST.
  */
 void filtrarPorRangoPromedio(const BST& arbol) {
-    float minProm, maxProm;
     cout << "\n----Consulta por Rango de Promedio (BST In-Order) ---\n";
-    cout << "Ingresa el promedio minimo (ej. 90.0): ";
-    cin >> minProm;
-    cout << "Ingresa el promedio maximo (ej. 100.0): ";
-    cin >> maxProm;
+    float minProm = InputUtils::readFloat("Ingresa el promedio minimo (ej. 90.0): ", 0.0f, 100.0f);
+    float maxProm = InputUtils::readFloat("Ingresa el promedio maximo (ej. 100.0): ", 0.0f, 100.0f);
 
     if (minProm > maxProm) {
         cout << "\nel minimo no puede ser mayor al maximo.\n";
@@ -224,15 +217,9 @@ int main() {
         cout << "7. Consultar expedientes por rango de Promedio (BST)" << endl;
         cout << "8. Guardar estado actual en el archivo CSV" << endl;
         cout << "9. Salir" << endl;
-        cout << "Selecciona una opcion: ";
+        opcion = InputUtils::readInt("Selecciona una opcion: ", 1, 9);
 
-        if (!(cin >> opcion)) {
-            cin.clear();
-            cin.ignore(10000, '\n');
-            cout << "\nEntrada invalida. Por favor ingresa un numero.\n";
-            continue;
-        }
-
+        
         switch (opcion) {
             case 1:
                 mostrarExpedientes(registros);
